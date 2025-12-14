@@ -1,51 +1,46 @@
-import React from 'react'
-
-
-
-
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import StepX_TeamSelection2 from './StepX_TeamSelection2';
 
 const StepX_TeamSelection = () => {
 
-    const [personSize, setPersonSize] = useState(0);
+    const [isRandomTeams, setRandomTeams] = useState(false);
+    const [showTeamSelection, setShowTeamSelection] = useState(false);
+
     const navigate = useNavigate();
 
     const onSubmit = (e) => {
         e.preventDefault();
-        // Form verilerini al
         const formData = new FormData(e.target);
+        const selectedSize = formData.get('teamSelectionRadios');
 
-        // "exampleRadios" ismindeki inputun değerini çek
-        const selectedSize = formData.get('personSizeRadios');
         console.log(e.target.value);
-        setPersonSize(selectedSize);
+        setRandomTeams(selectedSize);
+        setShowTeamSelection(true);
     }
 
     return (
         <React.Fragment>
-            <h1>Takım Seçimi: </h1>
             <form style={{ "margin-left": "10%", "margin-top": "2%" }} onSubmit={onSubmit}>
                 <div className="form-check">
-                    <input className="form-check-input" type="radio" name="personSizeRadios" value="2" />
+                    <input className="form-check-input" type="radio" name="teamSelectionRadios" value={false} />
                     <label className="form-check-label" >
-                        2
+                        Takım random oluştur:
                     </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="radio" name="personSizeRadios" value="3" />
+                    <input className="form-check-input" type="radio" name="teamSelectionRadios" value={true} />
                     <label className="form-check-label" >
-                        3
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name="personSizeRadios" value="4" />
-                    <label className="form-check-label">
-                        4
+                        Takımım hazır ?
                     </label>
                 </div>
                 <button type="submit" className="btn btn-primary">Primary</button>
             </form>
             <h1>Seçilen sayı</h1>
-            <h2>{personSize}</h2>
+            <h2>{isRandomTeams}</h2>
+             {
+                showTeamSelection && <StepX_TeamSelection2  isRandomTeams={isRandomTeams}/>
+            }
         </React.Fragment>
     )
 }

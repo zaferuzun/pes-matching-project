@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import StepX_TeamSelection from './StepX_TeamSelection';
 
 const Step1_TeamSize = () => {
 
   const [personSize, setPersonSize] = useState(0);
   const navigate = useNavigate();
+  const [showTeamSelection, setShowTeamSelection] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ const Step1_TeamSize = () => {
     const selectedSize = formData.get('personSizeRadios');
     console.log(e.target.value);
     setPersonSize(selectedSize);
+    setShowTeamSelection(true);
 
   }
 
@@ -44,6 +47,10 @@ const Step1_TeamSize = () => {
       </form>
       <h1>Seçilen sayı</h1>
       <h2>{personSize}</h2>
+      {
+          showTeamSelection &&
+              <StepX_TeamSelection/>
+      }
     </React.Fragment>
   )
 }
